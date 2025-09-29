@@ -3,7 +3,8 @@ def call (String credentialsid , String dockerhub_username , String image_name, 
      (credentialsId: "${DOCKER_CREDENTIAL_ID}", 
       usernameVariable: 'DOCKER_USERNAME',
       passwordVariable: 'DOCKER_PASSWORD')]) {
-      sh "sudo docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-      sh "sudo docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}"
+      sh """ echo $DOCKER_PASSWORD |docker login -u $DOCKER_USERNAME --password-stdin
+              docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
+         """
 }
 }
